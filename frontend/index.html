@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Luxe Aqtobe — Unrivaled Luxury in Aktobe</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          ink: '#0b1220',
+          slate: { 850: '#16213a', 950: '#0b1220' },
+          ivory: '#f7f4ec',
+          gold: { DEFAULT: '#c9a24b', soft: '#e8d9ad', deep: '#8a6d23' },
+          steppe: '#4a5a4c'
+        },
+        fontFamily: {
+          display: ['"Cormorant Garamond"', 'serif'],
+          body: ['"Plus Jakarta Sans"', 'sans-serif']
+        },
+        letterSpacing: { widest2: '.35em' }
+      }
+    }
+  }
+</script>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body class="antialiased">
+
+<!-- ===================== NAV ===================== -->
+<header id="siteNav" class="fixed top-0 inset-x-0 z-50 nav-blur transition-colors duration-500">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10 flex items-center justify-between h-20">
+    <a href="#top" class="flex items-center gap-3 group">
+      <svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="17" cy="17" r="16.25" stroke="#c9a24b" stroke-width="1"/>
+        <path d="M9 21 L17 9 L25 21" stroke="#c9a24b" stroke-width="1.1" fill="none"/>
+        <path d="M12 21 L17 13.5 L22 21" stroke="#e8d9ad" stroke-width="1.1" fill="none"/>
+      </svg>
+      <span class="font-display text-2xl tracking-wide">Luxe <span class="text-gold">Aqtobe</span></span>
+    </a>
+
+    <nav class="hidden lg:flex items-center gap-10 text-[.95rem] tracking-wide">
+      <a href="#rooms" class="hover:text-gold transition-colors">Rooms</a>
+      <a href="#experience" class="hover:text-gold transition-colors">Experience</a>
+      <a href="#dining" class="hover:text-gold transition-colors">Dining</a>
+      <a href="#location" class="hover:text-gold transition-colors">Location</a>
+    </nav>
+
+    <div class="flex items-center gap-4">
+      <button onclick="openModal()" class="hidden sm:inline-flex btn-gold px-6 py-2.5 rounded-full text-sm tracking-wide">Book Now</button>
+      <button id="menuBtn" class="lg:hidden w-10 h-10 grid place-items-center border border-gold/30 rounded-full" aria-label="Open menu">
+        <svg width="18" height="12" viewBox="0 0 18 12"><path d="M0 1H18M0 6H18M0 11H18" stroke="#e8d9ad" stroke-width="1.2"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- mobile menu -->
+  <div id="mobileMenu" class="lg:hidden hidden nav-solid px-6 pb-6 pt-2 flex flex-col gap-5 text-lg">
+    <a href="#rooms" class="hover:text-gold">Rooms</a>
+    <a href="#experience" class="hover:text-gold">Experience</a>
+    <a href="#dining" class="hover:text-gold">Dining</a>
+    <a href="#location" class="hover:text-gold">Location</a>
+    <button onclick="openModal()" class="btn-gold px-6 py-3 rounded-full text-sm w-full">Book Now</button>
+  </div>
+</header>
+
+<!-- ===================== HERO ===================== -->
+<!-- NOTE: `hero-section` (see styles.css) intentionally does NOT clip overflow,
+     so the floating glass booking bar can overlap the section edge without
+     being cropped. -->
+<section id="top" class="hero-section relative min-h-[100svh] flex items-end">
+  <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=2000&q=80"
+       onerror="this.onerror=null;this.style.display='none';this.parentElement.style.background='radial-gradient(120% 100% at 50% 0%, #16213a 0%, #0b1220 60%)';"
+       alt="Luxe Aqtobe at dusk"
+       class="absolute inset-0 w-full h-full object-cover" />
+  <div class="absolute inset-0" style="background:linear-gradient(180deg, rgba(11,18,32,.35) 0%, rgba(11,18,32,.55) 55%, #0b1220 100%);"></div>
+
+  <div class="relative z-10 w-full max-w-7xl mx-auto px-6 lg:px-10 pb-40 pt-40">
+    <p class="eyebrow fade-up">Aktobe · Kazakhstan</p>
+    <h1 class="fade-up font-display font-light text-[3rem] leading-[1.05] sm:text-[4.2rem] lg:text-[5.6rem] mt-6 max-w-4xl">
+      Unrivaled Luxury<br class="hidden sm:block"> in Aktobe
+    </h1>
+    <p class="fade-up mt-8 max-w-xl text-lg text-ivory/75 font-light">
+      A quiet monument on the steppe — where wide horizons, restrained design, and attentive service meet. Aktobe's only address for those who measure luxury in space, silence, and light.
+    </p>
+  </div>
+
+  <!-- floating booking bar -->
+  <div class="relative z-20 w-full">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-10 -mb-10 sm:-mb-12">
+      <form id="heroBookingForm" class="fade-up glass rounded-2xl px-5 sm:px-8 py-6 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-5 lg:gap-6 items-end shadow-2xl">
+        <div class="flex flex-col gap-2">
+          <label class="eyebrow !text-[.62rem]" for="checkin">Check-in</label>
+          <input required type="date" id="checkin" name="checkin" class="field py-2 text-[.95rem] bg-transparent">
+        </div>
+        <div class="flex flex-col gap-2">
+          <label class="eyebrow !text-[.62rem]" for="checkout">Check-out</label>
+          <input required type="date" id="checkout" name="checkout" class="field py-2 text-[.95rem] bg-transparent">
+        </div>
+        <div class="flex flex-col gap-2">
+          <label class="eyebrow !text-[.62rem]" for="guests">Guests</label>
+          <select id="guests" name="guests" class="field py-2 text-[.95rem] bg-transparent appearance-none">
+            <option value="1">1 Guest</option>
+            <option value="2" selected>2 Guests</option>
+            <option value="3">3 Guests</option>
+            <option value="4">4 Guests</option>
+          </select>
+        </div>
+        <div class="flex flex-col gap-2">
+          <label class="eyebrow !text-[.62rem]" for="roomType">Room Type</label>
+          <select id="roomType" name="roomType" class="field py-2 text-[.95rem] bg-transparent appearance-none">
+            <option value="deluxe">Deluxe Steppe Room</option>
+            <option value="executive">Executive Suite</option>
+            <option value="panorama">Panorama Suite</option>
+            <option value="presidential">Presidential Residence</option>
+          </select>
+        </div>
+        <button type="submit" class="btn-gold rounded-full py-3 text-sm tracking-wide col-span-2 sm:col-span-1">
+          Check Availability
+        </button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PHILOSOPHY STRIP ===================== -->
+<section class="pt-32 pb-24 max-w-4xl mx-auto px-6 text-center">
+  <div class="ornament mx-auto mb-8">
+    <svg viewBox="0 0 56 20" width="56" height="20" xmlns="http://www.w3.org/2000/svg">
+      <path d="M2 18 C 10 2, 18 2, 28 10 C 38 2, 46 2, 54 18" fill="none" stroke-width="1"/>
+    </svg>
+  </div>
+  <p class="fade-up font-display italic text-2xl sm:text-3xl leading-relaxed text-ivory/90">
+    "The steppe taught us that true luxury is not ornament, but space to breathe."
+  </p>
+  <p class="fade-up mt-6 text-ivory/55 text-sm tracking-widest2 uppercase">— The House Philosophy</p>
+</section>
+
+<div class="max-w-7xl mx-auto px-6"><div class="horizon-line"></div></div>
+
+<!-- ===================== ROOMS ===================== -->
+<section id="rooms" class="py-28 max-w-7xl mx-auto px-6 lg:px-10">
+  <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6 mb-14 fade-up">
+    <div>
+      <p class="eyebrow">Rooms &amp; Suites</p>
+      <h2 class="font-display font-light text-4xl sm:text-5xl mt-4">Spaces to unwind</h2>
+    </div>
+    <p class="max-w-sm text-ivory/60">Four residences, each sized generously beyond category standard, framing the steppe through floor-to-ceiling glass.</p>
+  </div>
+
+  <div id="roomsGrid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8"></div>
+</section>
+
+<!-- ===================== EXPERIENCE / AMENITIES ===================== -->
+<section id="experience" class="py-28 bg-slate-950/40 border-y border-gold/10">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10">
+    <div class="fade-up mb-14">
+      <p class="eyebrow">The Experience</p>
+      <h2 class="font-display font-light text-4xl sm:text-5xl mt-4 max-w-xl">Every hour, considered</h2>
+    </div>
+
+    <div id="amenitiesGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"></div>
+  </div>
+</section>
+
+<!-- ===================== DINING ===================== -->
+<section id="dining" class="py-28 max-w-7xl mx-auto px-6 lg:px-10 grid lg:grid-cols-2 gap-14 items-center">
+  <div class="fade-up order-2 lg:order-1">
+    <p class="eyebrow">Dining</p>
+    <h2 class="font-display font-light text-4xl sm:text-5xl mt-4">Qoyandy Table</h2>
+    <p class="mt-6 text-ivory/70 max-w-lg">
+      Our signature restaurant reinterprets Kazakh staples — bauyrsak, kazy, and steppe game — through a modern, produce-led lens. Open flame, seasonal tasting menus, and a cellar built around Central Asian and European vintages.
+    </p>
+    <ul class="mt-8 space-y-3 text-ivory/70">
+      <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 rounded-full bg-gold"></span> Open-flame tasting menu, 7 courses</li>
+      <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 rounded-full bg-gold"></span> Private cellar dining for up to 10</li>
+      <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 rounded-full bg-gold"></span> In-room dining, 24 hours</li>
+    </ul>
+    <button onclick="openModal('presidential')" class="mt-10 inline-flex items-center gap-2 border border-gold/50 hover:bg-gold hover:text-ink transition-colors rounded-full px-7 py-3 text-sm tracking-wide">
+      Reserve a Table
+    </button>
+  </div>
+  <div class="order-1 lg:order-2 fade-up">
+    <img src="https://images.unsplash.com/photo-1519449556851-5720b33024e7?auto=format&fit=crop&w=1400&q=80"
+         onerror="this.onerror=null;this.style.background='linear-gradient(160deg,#16213a,#0b1220)';this.removeAttribute('src');"
+         class="rounded-2xl w-full h-[420px] object-cover" alt="Fine dining table setting">
+  </div>
+</section>
+
+<!-- ===================== LOCATION ===================== -->
+<section id="location" class="py-28 bg-slate-950/40 border-y border-gold/10">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10 grid lg:grid-cols-2 gap-14 items-center">
+    <img src="https://images.unsplash.com/photo-1445019980597-93fa8acb246c?auto=format&fit=crop&w=1400&q=80"
+         onerror="this.onerror=null;this.style.background='linear-gradient(160deg,#16213a,#0b1220)';this.removeAttribute('src');"
+         class="fade-up rounded-2xl w-full h-[420px] object-cover" alt="Steppe landscape near Aktobe">
+    <div class="fade-up">
+      <p class="eyebrow">Location</p>
+      <h2 class="font-display font-light text-4xl sm:text-5xl mt-4">On the edge of the steppe</h2>
+      <p class="mt-6 text-ivory/70 max-w-lg">
+        Set along the Ilek River in central Aktobe, fifteen minutes from Aktobe International Airport and moments from the city's cultural quarter — near, yet entirely apart.
+      </p>
+      <div class="mt-8 grid grid-cols-2 gap-6 text-sm">
+        <div>
+          <p class="text-gold font-medium">15 min</p>
+          <p class="text-ivory/60">from Aktobe Airport (AKX)</p>
+        </div>
+        <div>
+          <p class="text-gold font-medium">8 min</p>
+          <p class="text-ivory/60">to City Centre</p>
+        </div>
+        <div>
+          <p class="text-gold font-medium">Ilek River</p>
+          <p class="text-ivory/60">Private riverside terrace</p>
+        </div>
+        <div>
+          <p class="text-gold font-medium">24/7</p>
+          <p class="text-ivory/60">Concierge &amp; airport transfer</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FINAL CTA ===================== -->
+<section class="py-32 text-center px-6">
+  <p class="eyebrow fade-up">Reservations</p>
+  <h2 class="fade-up font-display font-light text-4xl sm:text-6xl mt-4 max-w-3xl mx-auto">Your stay in Aktobe begins here</h2>
+  <button onclick="openModal()" class="fade-up btn-gold mt-10 px-10 py-4 rounded-full text-sm tracking-widest2 uppercase">Book Now</button>
+</section>
+
+<!-- ===================== FOOTER ===================== -->
+<footer class="border-t border-gold/10 pt-20 pb-10">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10 grid sm:grid-cols-2 lg:grid-cols-4 gap-12">
+    <div>
+      <span class="font-display text-2xl">Luxe <span class="text-gold">Aqtobe</span></span>
+      <p class="mt-4 text-ivory/55 text-sm max-w-xs">A five-star residence on the Ilek River, in the heart of Aktobe, Kazakhstan.</p>
+    </div>
+    <div>
+      <p class="eyebrow mb-4">Address</p>
+      <p class="text-ivory/60 text-sm leading-relaxed">12 Abilkayyr Khan Avenue<br>Aktobe, 030000<br>Republic of Kazakhstan</p>
+    </div>
+    <div>
+      <p class="eyebrow mb-4">Contact</p>
+      <p class="text-ivory/60 text-sm leading-relaxed">+7 7132 500 100<br>reservations@luxeaqtobe.kz</p>
+    </div>
+    <div>
+      <p class="eyebrow mb-4">Follow</p>
+      <div class="flex gap-4 text-ivory/60 text-sm">
+        <a href="#" class="hover:text-gold">Instagram</a>
+        <a href="#" class="hover:text-gold">Telegram</a>
+        <a href="#" class="hover:text-gold">WhatsApp</a>
+      </div>
+    </div>
+  </div>
+  <div class="max-w-7xl mx-auto px-6 lg:px-10 mt-16 pt-8 border-t border-gold/10 flex flex-col sm:flex-row justify-between gap-3 text-xs text-ivory/40 tracking-wide">
+    <p>© 2026 Luxe Aqtobe. All rights reserved.</p>
+    <p>Privacy Policy · Terms of Stay</p>
+  </div>
+</footer>
+
+<!-- ===================== BOOKING MODAL ===================== -->
+<div id="bookingModal" class="fixed inset-0 z-[100] hidden opacity-0">
+  <div class="absolute inset-0 bg-black/70 backdrop-blur-sm" onclick="closeModal()"></div>
+  <div class="relative z-10 h-full overflow-y-auto flex items-center justify-center p-4 sm:p-8">
+    <div class="modal-panel opacity-0 translate-y-6 w-full max-w-2xl glass rounded-2xl p-6 sm:p-10">
+      <div class="flex items-start justify-between mb-8">
+        <div>
+          <p class="eyebrow">Reserve Your Stay</p>
+          <h3 class="font-display font-light text-3xl mt-2">Complete Your Booking</h3>
+        </div>
+        <button onclick="closeModal()" aria-label="Close" class="w-9 h-9 grid place-items-center rounded-full border border-gold/30 hover:bg-gold/10">
+          <svg width="14" height="14" viewBox="0 0 14 14"><path d="M1 1L13 13M13 1L1 13" stroke="#e8d9ad" stroke-width="1.3"/></svg>
+        </button>
+      </div>
+
+      <form id="modalBookingForm" class="space-y-8">
+        <div>
+          <p class="eyebrow !text-[.65rem] mb-4">Select Room Tier</p>
+          <div id="roomTierOptions" class="grid grid-cols-2 sm:grid-cols-4 gap-3"></div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-6">
+          <div class="flex flex-col gap-2">
+            <label class="eyebrow !text-[.62rem]" for="mCheckin">Check-in</label>
+            <input required type="date" id="mCheckin" name="checkin" class="field py-2">
+          </div>
+          <div class="flex flex-col gap-2">
+            <label class="eyebrow !text-[.62rem]" for="mCheckout">Check-out</label>
+            <input required type="date" id="mCheckout" name="checkout" class="field py-2">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-6">
+          <div class="flex flex-col gap-2">
+            <label class="eyebrow !text-[.62rem]" for="mGuests">Guests</label>
+            <select id="mGuests" name="guests" class="field py-2">
+              <option value="1">1 Guest</option>
+              <option value="2" selected>2 Guests</option>
+              <option value="3">3 Guests</option>
+              <option value="4">4 Guests</option>
+            </select>
+          </div>
+          <div class="flex flex-col gap-2">
+            <label class="eyebrow !text-[.62rem]" for="mPhone">Phone</label>
+            <input required type="tel" id="mPhone" name="phone" placeholder="+7 700 000 0000" class="field py-2">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-6">
+          <div class="flex flex-col gap-2">
+            <label class="eyebrow !text-[.62rem]" for="mName">Full Name</label>
+            <input required type="text" id="mName" name="fullName" placeholder="Aisha Nurlanovna" class="field py-2">
+          </div>
+          <div class="flex flex-col gap-2">
+            <label class="eyebrow !text-[.62rem]" for="mEmail">Email</label>
+            <input required type="email" id="mEmail" name="email" placeholder="you@example.com" class="field py-2">
+          </div>
+        </div>
+
+        <div class="flex flex-col gap-2">
+          <label class="eyebrow !text-[.62rem]" for="mRequests">Special Requests</label>
+          <textarea id="mRequests" name="requests" rows="2" placeholder="Airport transfer, dietary notes, occasion..." class="field py-2 resize-none"></textarea>
+        </div>
+
+        <button type="submit" class="btn-gold w-full rounded-full py-4 text-sm tracking-widest2 uppercase">Confirm Reservation</button>
+        <p id="modalConfirmMsg" class="hidden text-center text-gold text-sm"></p>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
