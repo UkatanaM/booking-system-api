@@ -26,3 +26,7 @@ def create_booking(booking_data: BookingCreate, db: Session = Depends(get_db)):
     db.commit()
     db.refresh(new_booking)
     return new_booking
+
+@app.get("/api/v1/bookings", response_model=list[BookingResponse])
+def get_all_bookings(db: Session = Depends(get_db)):
+    return db.query(Booking).all()
