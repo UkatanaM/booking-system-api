@@ -229,3 +229,39 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
 });
+const bookingForm = document.querySelector('#modalBookingForm');
+bookingForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const payload = {
+        room_tier: document.querySelector('#room_tier').value,
+        check_in: document.querySelector('#check_in').value,
+        check_out: document.querySelector('#check_out').value,
+        guests: parseInt(document.querySelector('#guests').value),
+        full_name: document.querySelector('#full_name').value,
+        email: document.querySelector('#email').value,
+        phone: document.querySelector('#phone').value,
+        special_requests: document.querySelector('#special_requests').value || null
+    };
+
+    try {
+        const response = await fetch('http://127.0.0.1:8000/api/v1/bookings', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+        });
+
+        if (response.ok) {
+            const result = await response.json();
+            alert(`Успешно забронировано! ID брони: ${result.id}`);
+            bookingForm.reset();
+        } else {
+            alert('Ошибка при бронировании. Проверьте данные.');
+        }
+    } catch (error) {
+        console.error('Ошибка:', error);
+        alert('Сервер недоступен');
+    }
+});
