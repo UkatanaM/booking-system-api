@@ -235,13 +235,13 @@ bookingForm.addEventListener('submit', async (e) => {
 
     const payload = {
         room_tier: document.querySelector('#room_tier').value,
-        check_in: document.querySelector('#check_in').value,
-        check_out: document.querySelector('#check_out').value,
-        guests: parseInt(document.querySelector('#guests').value),
-        full_name: document.querySelector('#full_name').value,
-        email: document.querySelector('#email').value,
-        phone: document.querySelector('#phone').value,
-        special_requests: document.querySelector('#special_requests').value || null
+      check_in: bookingForm.querySelector('#mCheckin').value,
+      check_out: bookingForm.querySelector('#mCheckout').value,
+      guests: parseInt(bookingForm.querySelector('#mGuests').value),
+      full_name: bookingForm.querySelector('#mName').value,
+      email: bookingForm.querySelector('#mEmail').value,
+      phone: bookingForm.querySelector('#mPhone').value,
+      special_requests: bookingForm.querySelector('#mRequests').value || null
     };
 
     try {
