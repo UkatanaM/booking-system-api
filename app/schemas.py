@@ -30,3 +30,6 @@ class BookingResponse(BookingBase):
 
     class Config:
         from_attributes = True
+
+class BookingStatusUpdate(BaseModel):
+    status: BookingStatus
