@@ -1,10 +1,10 @@
 from datetime import date
 from typing import Optional
-from pydantic import BaseModel, EmailStr, Field, model_validator
+from pydantic import BaseModel, ConfigDict, EmailStr, Field, model_validator
+from app.models import BookingStatus
 
 
 class BookingBase(BaseModel):
-    room_tier: str
     check_in: date
     check_out: date
     guests: int = Field(..., ge=1, description="Минимум 1 гость")
@@ -15,6 +15,7 @@ class BookingBase(BaseModel):
 
 
 class BookingCreate(BookingBase):
+    room_tier: str
 
     @model_validator(mode="after")
     def validate_dates(self):
@@ -27,12 +28,12 @@ class BookingCreate(BookingBase):
 
 class BookingResponse(BookingBase):
     id: int
-
-    class Config:
-        from_attributes = True
-
-class BookingStatusUpdate(BaseModel):
+    room_id: int
     status: BookingStatus
+    total_price: int
+
+    model_config = ConfigDict(from_attributes=True)
+
 
 class RoomResponse(BaseModel):
     id: int
@@ -41,5 +42,8 @@ class RoomResponse(BaseModel):
     price_per_night: int
     total_rooms: int
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
+
+
+class BookingStatusUpdate(BaseModel):
+    status: BookingStatus
