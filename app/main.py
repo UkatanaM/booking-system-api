@@ -6,6 +6,8 @@ from app.database import get_db
 from app.models import Booking, Room, BookingStatus
 from app.schemas import BookingCreate, BookingResponse, BookingStatusUpdate
 
+
+
 app = FastAPI(title="Luxe Aqtobe API")
 
 # Настройка CORS для взаимодействия с фронтендом
@@ -77,3 +79,29 @@ def create_booking(booking_data: BookingCreate, db: Session = Depends(get_db)):
     db.commit()
     db.refresh(new_booking)
     return new_booking
+
+# 3. Список всех номеров (для фронтенда / выбора комнат)
+@app.get("/api/v1/rooms", response_model=list[RoomResponse])
+def get_rooms(db: Session = Depends(get_db)):
+    return db.query(Room).all()
+
+
+# 4. Список всех бронирований (для админки) с фильтром по статусу
+@app.get("/api/v1/bookings", response_model=list[BookingResponse])
+def get_bookings(
+    status: BookingStatus | None = None, 
+    db: Session = Depends(get_db)
+):
+    query = db.query(Booking)
+    if status:
+        query = query.filter(Booking.status == status)
+    return query.all()
+
+
+# 5. Детали одной брони по ID
+@app.get("/api/v1/bookings/{booking_id}", response_model=BookingResponse)
+def get_booking(booking_id: int, db: Session = Depends(get_db)):
+    booking = db.query(Booking).filter(Booking.id == booking_id).first()
+    if not booking:
+        raise HTTPException(status_code=404, detail="Бронирование не найдено")
+    return booking

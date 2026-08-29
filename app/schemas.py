@@ -33,3 +33,13 @@ class BookingResponse(BookingBase):
 
 class BookingStatusUpdate(BaseModel):
     status: BookingStatus
+
+class RoomResponse(BaseModel):
+    id: int
+    tier: str
+    name: str
+    price_per_night: int
+    total_rooms: int
+
+    class Config:
+        from_attributes = True
