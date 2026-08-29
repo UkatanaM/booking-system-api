@@ -1,0 +1,11 @@
+services:
+  web:
+    build: .
+    container_name: booking_api_app
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    environment:
+      - DATABASE_URL=sqlite:///./booking.db
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
