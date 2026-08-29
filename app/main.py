@@ -1,14 +1,24 @@
 from fastapi import FastAPI, Depends, HTTPException, status
+from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
-from datetime import datetime
 
-from app.database import engine, Base, get_db
+from app.database import get_db
 from app.models import Booking, Room, BookingStatus
-from app.schemas import BookingCreate, BookingResponse
+from app.schemas import BookingCreate, BookingResponse, BookingStatusUpdate
 
-from app.schemas import BookingStatusUpdate
+app = FastAPI(title="Luxe Aqtobe API")
 
-# Изменение статуса бронирования (Confirm / Cancel)
+# Настройка CORS для взаимодействия с фронтендом
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+
+# 1. Изменение статуса бронирования (Admin)
 @app.patch("/api/v1/bookings/{booking_id}/status", response_model=BookingResponse)
 def update_booking_status(
     booking_id: int, 
@@ -24,12 +34,8 @@ def update_booking_status(
     db.refresh(booking)
     return booking
 
-Base.metadata.create_all(bind=engine)
 
-app = FastAPI(title="Luxe Aqtobe API")
-
-# (CORS Middleware остаётся без изменений)
-
+# 2. Создание бронирования (Client)
 @app.post("/api/v1/bookings", response_model=BookingResponse, status_code=status.HTTP_201_CREATED)
 def create_booking(booking_data: BookingCreate, db: Session = Depends(get_db)):
     # 1. Ищем категорию комнаты
